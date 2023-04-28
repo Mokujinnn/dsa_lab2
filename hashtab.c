@@ -6,7 +6,7 @@
 
 #include "hashtab.h"
 
-uint32_t hashtab_hash(char *key, uint32_t size)
+uint32_t hashtab_hash(char *key, size_t size)
 {
     uint32_t h = 0, hash_mul = 31;
 
@@ -18,7 +18,7 @@ uint32_t hashtab_hash(char *key, uint32_t size)
     return h % size;
 }
 
-void hashtab_init(listnode **hashtab, uint32_t size)
+void hashtab_init(listnode **hashtab, size_t size)
 {
     for (int i = 0; i < size; i++)
     {
@@ -26,11 +26,11 @@ void hashtab_init(listnode **hashtab, uint32_t size)
     }
 }
 
-void hashtab_add(listnode **hashtab, char *key, int value)
+void hashtab_add(listnode **hashtab, char *key, int value, size_t size)
 {
     listnode *node;
 
-    int index = hashtab_hash(key);
+    int index = hashtab_hash(key, size);
     node = malloc(sizeof(*node));
     if (node != NULL) 
     {
@@ -40,3 +40,61 @@ void hashtab_add(listnode **hashtab, char *key, int value)
         hashtab[index] = node;
     }
 }
+
+listnode *hashtab_lookup(listnode **hashtab, char *key, size_t size)
+{
+	listnode *node;
+	
+	int index = hashtab_hash(key, size);
+	
+	for (node = hashtab[index]; node != NULL; node = node->next)
+	{
+		if (strcmp(node->key, key) == 0)
+		{
+			return node;
+		}
+	}
+	return NULL;
+}
+
+void hashtab_delete(listnode **hashtab, char *key, size_t size)
+{
+	listnode *node, *prev = NULL;
+	
+	int index = hashtab_hash(key, size);
+	
+	for (node = hashtab[index]; node != NULL; node = node->next)
+	{
+		if (strcmp(node->key, key) == 0)
+		{
+			if (prev == NULL)
+				hashtab[index] = node->next;
+			else
+				prev->next = node->next;
+				
+			free(node);
+			return;
+		}
+		
+		prev = node;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
