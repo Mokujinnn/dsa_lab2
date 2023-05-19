@@ -134,11 +134,13 @@ int hashtab_collisionJenk(listnode **hashtab, char *key, size_t size)
 {
 	listnode *node;
 
-	int index = JenkinsHash(key, size);
 	int k = 0;
-	for (node = hashtab[index]; node != NULL; node = node->next)
+	for (int i = 0; i < size; i++)
 	{
-		k++;
+		node = hashtab[i];
+		if (node != NULL)
+			if (node->next != NULL)
+				k++;
 	}
 
 	return k;
@@ -148,11 +150,13 @@ int hashtab_collisionKR(listnode **hashtab, char *key, size_t size)
 {
 	listnode *node;
 
-	int index = hashtab_hash(key, size);
 	int k = 0;
-	for (node = hashtab[index]; node != NULL; node = node->next)
+	for (int i = 0; i < size; i++)
 	{
-		k++;
+		node = hashtab[i];
+		if (node != NULL)
+			if (node->next != NULL)
+				k++;
 	}
 
 	return k;

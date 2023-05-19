@@ -10,7 +10,7 @@ int main()
     srand(time(NULL));
     int n = 200000;
 
-    int cur_size = 47;
+    int cur_size = 5051;
 
     listnode *hashtabKR[cur_size];
     listnode *hashtabJenk[cur_size];
@@ -18,7 +18,7 @@ int main()
     //bstree *bstree;
 
     FILE *file = fopen("words.txt", "r");
-    char words[n][6];
+    char words[n][11];
 
     for(int i = 0; i < 200000; i++)
     {
