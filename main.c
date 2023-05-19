@@ -5,12 +5,15 @@
 #include "hashtab.h"
 #include "bstree.h"
 
+
+void print_hashtab(listnode **hashtab, size_t size);
+
 int main()
 {
     srand(time(NULL));
     int n = 200000;
 
-    int cur_size = 5051;
+    int cur_size = 200000;
 
     listnode *hashtabKR[cur_size];
     listnode *hashtabJenk[cur_size];
@@ -53,6 +56,9 @@ int main()
         //struct Bstree *nodebst = bstree_lookup(bstree, find);
         //double end = clock();
         clock_gettime(CLOCK_REALTIME, &t2);
+        
+        //print_hashtab(hashtabKR, cur_size);
+        
         int k = hashtab_collisionKR(hashtabKR, find, cur_size);
 
         double t = 1000000000*(t2.tv_sec - t1.tv_sec)+(t2.tv_nsec - t1.tv_nsec);

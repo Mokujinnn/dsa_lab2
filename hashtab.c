@@ -139,8 +139,13 @@ int hashtab_collisionJenk(listnode **hashtab, char *key, size_t size)
 	{
 		node = hashtab[i];
 		if (node != NULL)
-			if (node->next != NULL)
+		{
+			while (node->next != NULL)
+			{
 				k++;
+				node = node->next;
+			}
+		}
 	}
 
 	return k;
@@ -155,9 +160,44 @@ int hashtab_collisionKR(listnode **hashtab, char *key, size_t size)
 	{
 		node = hashtab[i];
 		if (node != NULL)
-			if (node->next != NULL)
+		{
+			while (node->next != NULL)
+			{
 				k++;
+				node = node->next;
+			}
+		}
 	}
 
 	return k;
 }
+
+void print_hashtab(listnode **hashtab, size_t size)
+{
+	listnode *node;
+	for (int i = 0; i < size; i++)
+	{
+		node = hashtab[i];
+		if (node != NULL)
+		{
+			if (node->next != NULL)
+			{
+				//printf("collision in hashtab[%d]\n", i);
+			}
+			else
+			{
+				printf("Only one element in hashtab[%d]\n", i);
+			}
+		}
+		else
+		{
+			printf("No list in hashtab[%d]\n", i);
+		}
+	}
+}
+
+
+
+
+
+
